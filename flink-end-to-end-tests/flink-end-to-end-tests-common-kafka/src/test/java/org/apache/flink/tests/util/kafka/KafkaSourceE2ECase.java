@@ -34,7 +34,7 @@ import org.testcontainers.utility.DockerImageName;
 /** Kafka E2E test based on connector testing framework. */
 public class KafkaSourceE2ECase extends SourceTestSuiteBase<String> {
     private static final String KAFKA_HOSTNAME = "kafka";
-    private static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:5.5.2";
+    private static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:5.5.6";
 
     // Defines TestEnvironment
     @TestEnv

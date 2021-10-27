@@ -85,7 +85,7 @@ public class SQLClientSchemaRegistryITCase {
 
     @ClassRule
     private static final SchemaRegistryContainer registry =
-            new SchemaRegistryContainer("5.5.2")
+            new SchemaRegistryContainer("5.5.6")
                     .withKafka(INTER_CONTAINER_KAFKA_ALIAS + ":9092")
                     .withNetwork(network)
                     .withNetworkAliases(INTER_CONTAINER_REGISTRY_ALIAS)
