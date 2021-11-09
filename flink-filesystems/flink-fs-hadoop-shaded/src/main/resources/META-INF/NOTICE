@@ -6,9 +6,9 @@ The Apache Software Foundation (http://www.apache.org/).
 
 This project bundles the following dependencies under the Apache Software License 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-- org.apache.hadoop:hadoop-annotations:3.2.2
-- org.apache.hadoop:hadoop-auth:3.2.2
-- org.apache.hadoop:hadoop-common:3.2.2
+- org.apache.hadoop:hadoop-annotations:3.3.1
+- org.apache.hadoop:hadoop-auth:3.3.1
+- org.apache.hadoop:hadoop-common:3.3.1
 - org.apache.htrace:htrace-core4:4.1.0-incubating
 - org.apache.commons:commons-configuration2:2.1.1
 - org.apache.commons:commons-lang3:3.3.2
@@ -52,7 +52,7 @@ See bundled license files for details.
 
 - javax.activation:javax.activation-api:1.2.0
 
-This project bundles org.apache.hadoop:*:3.2.2 from which it inherits the following notices:
+This project bundles org.apache.hadoop:*:3.3.1 from which it inherits the following notices:
 
 The Apache Hadoop project contains subcomponents with separate copyright
 notices and license terms. Your use of the source code for the these
