@@ -126,6 +126,11 @@ under the License.
 					<groupId>org.jetbrains</groupId>
 					<artifactId>annotations</artifactId>
 				</exclusion>
+				<!-- AWS Kinesis Producer Library includes a newer version -->
+				<exclusion>
+					<groupId>io.github.classgraph</groupId>
+					<artifactId>classgraph</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
