@@ -37,7 +37,6 @@ import org.apache.flink.table.runtime.typeutils.TypeCheckUtils._
 import org.apache.flink.table.types.logical.LogicalTypeFamily.DATETIME
 import org.apache.flink.table.types.logical.LogicalTypeRoot._
 import org.apache.flink.table.types.logical._
-import org.apache.flink.table.types.logical.utils.LogicalTypeCasts.supportsExplicitCast
 import org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getFieldTypes
 import org.apache.flink.table.types.logical.utils.LogicalTypeMerging.findCommonType
 import org.apache.flink.table.utils.DateTimeUtils
@@ -46,7 +45,6 @@ import org.apache.flink.util.Preconditions.checkArgument
 
 import java.time.ZoneId
 import java.util.Arrays.asList
-
 import scala.collection.JavaConversions._
 
 /**
@@ -1097,13 +1095,6 @@ object ScalarOperatorGens {
       case (_, _) if isInteroperable(operand.resultType, targetType) =>
         operand.copy(resultType = targetType)
 
-      case (RAW, BINARY | VARBINARY) =>
-        generateUnaryOperatorIfNotNull(ctx, targetType, operand) {
-          val serializer = operand.resultType.asInstanceOf[RawType[_]].getTypeSerializer
-          val serTerm = ctx.addReusableObject(serializer, "serializer")
-          operandTerm => s"$operandTerm.toBytes($serTerm)"
-        }
-
       // Date -> Timestamp
       case (DATE, TIMESTAMP_WITHOUT_TIME_ZONE) =>
         generateUnaryOperatorIfNotNull(ctx, targetType, operand) {
@@ -1248,10 +1239,6 @@ object ScalarOperatorGens {
            | (TIME_WITHOUT_TIME_ZONE, BIGINT)
            | (INTERVAL_YEAR_MONTH, BIGINT) =>
         internalExprCasting(operand, targetType)
-
-      case (ROW | STRUCTURED_TYPE, ROW | STRUCTURED_TYPE)
-        if supportsExplicitCast(operand.resultType, targetType) =>
-        generateCastRowToRow(ctx, operand, targetType)
 
       case (_, _) =>
         throw new CodeGenException(
@@ -1899,35 +1886,6 @@ object ScalarOperatorGens {
   // ----------------------------------------------------------------------------------------
   // private generate utils
   // ----------------------------------------------------------------------------------------
-
-  private def generateCastRowToRow(
-      ctx: CodeGeneratorContext,
-      operand: GeneratedExpression,
-      targetRowType: LogicalType)
-    : GeneratedExpression = {
-    // assumes that the arity has been checked before
-    generateCallWithStmtIfArgsNotNull(ctx, targetRowType, Seq(operand)) { case Seq(rowTerm) =>
-      val fieldExprs = operand
-        .resultType
-        .getChildren
-        .zip(targetRowType.getChildren)
-        .zipWithIndex
-        .map { case ((sourceType, targetType), idx) =>
-          val sourceTypeTerm = primitiveTypeTermForType(sourceType)
-          val sourceTerm = newName("field")
-          val sourceAccessCode = rowFieldReadAccess(idx, rowTerm, sourceType)
-          val sourceExpr = GeneratedExpression(
-            sourceTerm,
-            s"$rowTerm.isNullAt($idx)",
-            s"$sourceTypeTerm $sourceTerm = ($sourceTypeTerm) $sourceAccessCode;",
-            sourceType)
-          generateCast(ctx, sourceExpr, targetType)
-        }
-
-      val generateRowExpr = generateRow(ctx, targetRowType, fieldExprs)
-      (generateRowExpr.code, generateRowExpr.resultTerm)
-    }
-  }
 
   /**
    * This method supports casting literals to non-composite types (primitives, strings, date time).

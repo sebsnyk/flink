@@ -48,7 +48,7 @@ The example below shows how to create an Elasticsearch sink table:
 ```sql
 CREATE TABLE myUserTable (
   user_id STRING,
-  user_name STRING
+  user_name STRING,
   uv BIGINT,
   pv BIGINT,
   PRIMARY KEY (user_id) NOT ENFORCED
@@ -81,7 +81,7 @@ Connector Options
       <td>Specify what connector to use, valid values are:
       <ul>
       <li><code>elasticsearch-6</code>: connect to Elasticsearch 6.x cluster.</li>
-      <li><code>elasticsearch-7</code>: connect to Elasticsearch 7.x and later versions cluster.</li>
+      <li><code>elasticsearch-7</code>: connect to Elasticsearch 7.x cluster.</li>
       </ul></td>
     </tr>
     <tr>
