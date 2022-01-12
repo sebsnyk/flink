@@ -28,6 +28,7 @@ import org.apache.flink.util.StringUtils;
 
 import javax.annotation.Nullable;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static org.apache.flink.table.factories.ManagedTableFactory.discoverManagedTableFactory;
@@ -79,7 +80,9 @@ public class ManagedTableListener {
         }
     }
 
-    private boolean isManagedTable(@Nullable Catalog catalog, ResolvedCatalogBaseTable<?> table) {
+    /** Check a resolved catalog table is Flink's managed table or not. */
+    public static boolean isManagedTable(
+            @Nullable Catalog catalog, ResolvedCatalogBaseTable<?> table) {
         if (catalog == null || !catalog.supportsManagedTable()) {
             // catalog not support managed table
             return false;
@@ -132,6 +135,6 @@ public class ManagedTableListener {
     private DynamicTableFactory.Context createTableFactoryContext(
             ObjectIdentifier identifier, ResolvedCatalogTable table, boolean isTemporary) {
         return new FactoryUtil.DefaultDynamicTableContext(
-                identifier, table, config, classLoader, isTemporary);
+                identifier, table, Collections.emptyMap(), config, classLoader, isTemporary);
     }
 }
