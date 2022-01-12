@@ -143,6 +143,10 @@ under the License.
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-connector-testing</artifactId>
 			<version>${project.version}</version>
+			<exclusion>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+			</exclusion>
 		</dependency>
 
 		<dependency>
