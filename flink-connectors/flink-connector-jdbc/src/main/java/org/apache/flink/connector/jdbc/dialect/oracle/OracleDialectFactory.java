@@ -16,26 +16,22 @@
  * limitations under the License.
  */
 
-package org.apache.flink.streaming.runtime.tasks;
+package org.apache.flink.connector.jdbc.dialect.oracle;
 
 import org.apache.flink.annotation.Internal;
+import org.apache.flink.connector.jdbc.dialect.JdbcDialect;
+import org.apache.flink.connector.jdbc.dialect.JdbcDialectFactory;
 
-/**
- * Interface for processing-time callbacks that can be registered at a {@link
- * ProcessingTimeService}.
- */
+/** Factory for {@link OracleDialect}. */
 @Internal
-@FunctionalInterface
-public interface ProcessingTimeCallback {
+public class OracleDialectFactory implements JdbcDialectFactory {
+    @Override
+    public boolean acceptsURL(String url) {
+        return url.startsWith("jdbc:oracle:");
+    }
 
-    /**
-     * This method is invoked with the timestamp for which the trigger was scheduled.
-     *
-     * <p>If the triggering is delayed for whatever reason (trigger timer was blocked, JVM stalled
-     * due to a garbage collection), the timestamp supplied to this function will still be the
-     * original timestamp for which the trigger was scheduled.
-     *
-     * @param timestamp The timestamp for which the trigger event was scheduled.
-     */
-    void onProcessingTime(long timestamp) throws Exception;
+    @Override
+    public JdbcDialect create() {
+        return new OracleDialect();
+    }
 }
