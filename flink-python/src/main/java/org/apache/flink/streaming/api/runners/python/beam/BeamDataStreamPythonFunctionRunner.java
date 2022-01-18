@@ -129,7 +129,7 @@ public class BeamDataStreamPythonFunctionRunner extends BeamPythonFunctionRunner
                                     RunnerApi.FunctionSpec.newBuilder()
                                             .setUrn(functionUrn)
                                             .setPayload(
-                                                    org.apache.beam.vendor.grpc.v1p26p0.com.google
+                                                    org.apache.beam.vendor.grpc.v1p43p2.com.google
                                                             .protobuf.ByteString.copyFrom(
                                                             functionProto.toByteArray()))
                                             .build());

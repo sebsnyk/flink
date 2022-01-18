@@ -35,7 +35,7 @@ under the License.
 	<packaging>jar</packaging>
 
 	<properties>
-		<arrow.version>0.16.0</arrow.version>
+		<arrow.version>5.0.0</arrow.version>
 	</properties>
 
 	<dependencies>
@@ -94,6 +94,10 @@ under the License.
 				<exclusion>
 					<groupId>org.apache.beam</groupId>
 					<artifactId>beam-vendor-bytebuddy-1_10_8</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.errorprone</groupId>
+					<artifactId>error_prone_annotations</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -375,11 +379,11 @@ under the License.
 									</excludes>
 								</filter>
 								<filter>
-									<artifact>org.apache.beam:beam-vendor-grpc-1_26_0</artifact>
+									<artifact>org.apache.beam:beam-vendor-grpc-1_43_2</artifact>
 									<excludes>
-										<exclude>org/apache/beam/vendor/grpc/v1p26p0/org/jboss/**</exclude>
+										<exclude>org/apache/beam/vendor/grpc/v1p43p2/org/jboss/**</exclude>
 										<exclude>schema/**</exclude>
-										<exclude>org/apache/beam/vendor/grpc/v1p26p0/org/eclipse/jetty/**</exclude>
+										<exclude>org/apache/beam/vendor/grpc/v1p43p2/org/eclipse/jetty/**</exclude>
 									</excludes>
 								</filter>
 								<filter>

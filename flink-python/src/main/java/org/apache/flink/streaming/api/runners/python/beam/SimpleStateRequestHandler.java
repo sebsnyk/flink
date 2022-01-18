@@ -48,8 +48,8 @@ import org.apache.flink.table.runtime.typeutils.RowDataSerializer;
 
 import org.apache.beam.model.fnexecution.v1.BeamFnApi;
 import org.apache.beam.runners.fnexecution.state.StateRequestHandler;
-import org.apache.beam.vendor.grpc.v1p26p0.com.google.common.base.Charsets;
-import org.apache.beam.vendor.grpc.v1p26p0.com.google.protobuf.ByteString;
+import org.apache.beam.vendor.grpc.v1p43p2.com.google.common.base.Charsets;
+import org.apache.beam.vendor.grpc.v1p43p2.com.google.protobuf.ByteString;
 
 import java.util.Base64;
 import java.util.Collections;
