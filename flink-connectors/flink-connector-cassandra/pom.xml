@@ -39,7 +39,6 @@ under the License.
 	<properties>
 		<cassandra.version>2.2.5</cassandra.version>
 		<driver.version>3.0.0</driver.version>
-		<cassandra.testContainers.version>1.16.2</cassandra.testContainers.version>
 	</properties>
 
 	<build>
@@ -131,12 +130,6 @@ under the License.
 			</exclusions>
 		</dependency>
 		<dependency>
-			<!-- Bump cassandra netty dependency -->
-			<groupId>io.netty</groupId>
-			<artifactId>netty-handler</artifactId>
-			<version>4.1.46.Final</version>
-		</dependency>
-		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-mapping</artifactId>
 			<version>${driver.version}</version>
@@ -211,7 +204,6 @@ under the License.
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>cassandra</artifactId>
-			<version>${cassandra.testContainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

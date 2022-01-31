@@ -152,7 +152,7 @@ public abstract class SchedulerBase implements SchedulerNG, CheckpointScheduling
 
     private final ExecutionGraphHandler executionGraphHandler;
 
-    private final OperatorCoordinatorHandler operatorCoordinatorHandler;
+    protected final OperatorCoordinatorHandler operatorCoordinatorHandler;
 
     private final ComponentMainThreadExecutor mainThreadExecutor;
 
@@ -465,6 +465,9 @@ public abstract class SchedulerBase implements SchedulerNG, CheckpointScheduling
 
     private void notifyCoordinatorsOfEmptyGlobalRestore() throws Exception {
         for (final ExecutionJobVertex ejv : getExecutionGraph().getAllVertices().values()) {
+            if (!ejv.isInitialized()) {
+                continue;
+            }
             for (final OperatorCoordinatorHolder coordinator : ejv.getOperatorCoordinators()) {
                 coordinator.resetToCheckpoint(OperatorCoordinator.NO_CHECKPOINT, null);
             }
