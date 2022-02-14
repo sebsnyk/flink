@@ -34,7 +34,7 @@ under the License.
 	<packaging>jar</packaging>
 
 	<properties>
-		<zookeeper.optional.version>3.5.9</zookeeper.optional.version>
+		<zookeeper.optional.version>3.6.3</zookeeper.optional.version>
 	</properties>
 
 	<dependencies>
@@ -238,13 +238,6 @@ under the License.
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-examples-streaming-state-machine_${scala.binary.version}</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.flink</groupId>
-			<artifactId>flink-examples-streaming-twitter_${scala.binary.version}</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -586,6 +579,16 @@ under the License.
 							<skip>true</skip>
 						</configuration>
 					</execution>
+					<execution>
+						<id>forbid-direct-table-planner-dependencies</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<!-- We need to depend on table planner to ship it in the /opt folder -->
+							<skip>true</skip>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
@@ -664,7 +667,7 @@ under the License.
 								<artifactItem>
 									<groupId>org.apache.flink</groupId>
 									<artifactId>flink-shaded-zookeeper-3</artifactId>
-									<version>${zookeeper.optional.version}-14.0</version>
+									<version>${zookeeper.optional.version}-${flink.shaded.version}</version>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 								</artifactItem>
