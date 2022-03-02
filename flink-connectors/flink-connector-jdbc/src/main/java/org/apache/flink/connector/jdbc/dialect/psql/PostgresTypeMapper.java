@@ -83,6 +83,7 @@ public class PostgresTypeMapper implements JdbcDialectTypeMapper {
     private static final String PG_CHARACTER_ARRAY = "_character";
     private static final String PG_CHARACTER_VARYING = "varchar";
     private static final String PG_CHARACTER_VARYING_ARRAY = "_varchar";
+    private static final String PG_SMALLSERIAL = "smallserial";
 
     @Override
     public DataType mapping(ObjectPath tablePath, ResultSetMetaData metadata, int colIndex)
@@ -101,6 +102,7 @@ public class PostgresTypeMapper implements JdbcDialectTypeMapper {
                 return DataTypes.BYTES();
             case PG_BYTEA_ARRAY:
                 return DataTypes.ARRAY(DataTypes.BYTES());
+            case PG_SMALLSERIAL:
             case PG_SMALLINT:
                 return DataTypes.SMALLINT();
             case PG_SMALLINT_ARRAY:
