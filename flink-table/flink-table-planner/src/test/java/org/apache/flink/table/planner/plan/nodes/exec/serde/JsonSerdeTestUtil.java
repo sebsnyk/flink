@@ -42,13 +42,14 @@ import static org.apache.calcite.jdbc.CalciteSchemaBuilder.asRootSchema;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
-class JsonSerdeTestUtil {
+/** Various test utils for serializing/deserializing to JSON. */
+public class JsonSerdeTestUtil {
 
     private JsonSerdeTestUtil() {
         // no instantiation
     }
 
-    static SerdeContext configuredSerdeContext() {
+    public static SerdeContext configuredSerdeContext() {
         return configuredSerdeContext(
                 CatalogManagerMocks.createEmptyCatalogManager(), TableConfig.getDefault());
     }
@@ -90,7 +91,7 @@ class JsonSerdeTestUtil {
                 plannerContext.createFrameworkConfig().getOperatorTable());
     }
 
-    static String toJson(SerdeContext serdeContext, Object object) throws IOException {
+    public static String toJson(SerdeContext serdeContext, Object object) throws IOException {
         final ObjectWriter objectWriter = JsonSerdeUtil.createObjectWriter(serdeContext);
         return objectWriter.writeValueAsString(object);
     }
@@ -118,28 +119,27 @@ class JsonSerdeTestUtil {
         JsonPointer jsonPointer = pathToPointer(path);
         assertThat(json)
                 .asInstanceOf(type(ObjectNode.class))
-                .as(
-                        "Serialized json '%s' contains at pointer '%s' a not null value",
-                        jsonPointer, json)
+                .as("Serialized json '%s'", json)
                 .matches(
                         o -> {
                             JsonNode node = o.at(jsonPointer);
                             return !node.isMissingNode() && !node.isNull();
-                        });
+                        },
+                        String.format("contains at pointer '%s' a not null value", jsonPointer));
     }
 
     static void assertThatJsonDoesNotContain(JsonNode json, String... path) {
         JsonPointer jsonPointer = pathToPointer(path);
         assertThat(json)
                 .asInstanceOf(type(ObjectNode.class))
-                .as(
-                        "Serialized json '%s' at pointer '%s' return missing node or null node",
-                        jsonPointer, json)
+                .as("Serialized json '%s'", json)
                 .matches(
                         o -> {
                             JsonNode node = o.at(jsonPointer);
                             return node.isMissingNode() || node.isNull();
-                        });
+                        },
+                        String.format(
+                                "at pointer '%s' return missing node or null node", jsonPointer));
     }
 
     private static JsonPointer pathToPointer(String... path) {
