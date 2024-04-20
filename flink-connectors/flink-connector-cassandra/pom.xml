@@ -39,7 +39,7 @@ under the License.
 	<properties>
 		<cassandra.version>2.2.5</cassandra.version>
 		<driver.version>3.0.0</driver.version>
-		<guava.version>18.0</guava.version>
+		<guava.version>32.0.0-android</guava.version>
 	</properties>
 
 	<build>
